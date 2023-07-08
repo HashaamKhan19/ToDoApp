@@ -5,6 +5,7 @@ import { AiOutlineBars } from "react-icons/ai";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { PiDotsSixVerticalBold } from "react-icons/pi";
 import { ClipLoader } from "react-spinners";
+import AllTasks from "./AllTasks";
 
 const TasksToDo = () => {
   const [showTasks, setShowTasks] = useState(true);
@@ -45,47 +46,12 @@ const TasksToDo = () => {
       </div>
 
       {/* Tasks Component Belows */}
-      <div
-        className={`bg-white p-2 mt-[4%] max-h-[400px] overflow-y-auto rounded-lg overflow-hidden transition-all duration-300 ease-in-out ${
-          showTasks
-            ? "max-h-[1000px] opacity-100"
-            : "max-h-0 opacity-0 pointer-events-none"
-        }`}
-      >
-        {loading ? (
-          <div className="flex justify-center">
-            <ClipLoader color="red" size={50} />
-          </div>
-        ) : errors.length !== 0 ? (
-          <div className="flex justify-center">
-            <p>{errors.message}</p>
-          </div>
-        ) : tasks.length === 0 ? (
-          <div className="flex justify-center">
-            <p>No Tasks Yet</p>
-          </div>
-        ) : (
-          tasks.map((task) => (
-            <div
-              className="flex flex-row justify-between px-2 py-4 border-b-2 border-gray-100 cursor-pointer"
-              key={task._id}
-            >
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id={task.id}
-                  name={task.title}
-                  className="h-4 w-4 rounded-full"
-                />
-                <label htmlFor="vehicle1">{task.title}</label>
-              </div>
-              <div className="self-center">
-                <PiDotsSixVerticalBold />
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+      <AllTasks
+        errors={errors}
+        tasks={tasks}
+        loading={loading}
+        showTasks={showTasks}
+      />
     </div>
   );
 };
