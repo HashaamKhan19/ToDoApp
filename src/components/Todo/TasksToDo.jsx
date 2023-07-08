@@ -1,40 +1,26 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { PiDotsSixVerticalBold } from "react-icons/pi";
 
 const TasksToDo = () => {
   const [showTasks, setShowTasks] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const tasks = [
-    {
-      id: 1,
-      title: "Wake Up",
-      completed: false,
-    },
+  const [tasks, setTasks] = useState([]);
 
-    {
-      id: 2,
-      title: "Suffer",
-      completed: false,
-    },
-    {
-      id: 3,
-      title: "Suffer More",
-      completed: false,
-    },
-    {
-      id: 4,
-      title: "Go to bed",
-      completed: false,
-    },
-    {
-      id: 6,
-      title: "Sleep",
-      completed: false,
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const results = await axios.get("http://localhost:3000/tasks");
+      setTasks(results?.data?.data);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="p-2 sm:w-[400px] w-[300px]">
       {/* Tasks to do */}
@@ -59,8 +45,8 @@ const TasksToDo = () => {
       >
         {tasks.map((task) => (
           <div
-            className="flex flex-row justify-between px-2 py-4 border-b-2 border-gray-100"
-            key={task.id}
+            className="flex flex-row justify-between px-2 py-4 border-b-2 border-gray-100 cursor-pointer"
+            key={task._id}
           >
             <div className="flex items-center gap-2">
               <input
