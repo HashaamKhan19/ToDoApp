@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { useState } from "react";
-import TasksToDo from "./TasksToDo";
+import React from "react";
+import AllTasks from "./AllTasks";
 
 export default function TodoList() {
   return (
@@ -23,7 +23,7 @@ export default function TodoList() {
       </div>
 
       {/* Tasks to do */}
-      <TasksToDo />
+      <AllTasks />
     </div>
   );
 }
