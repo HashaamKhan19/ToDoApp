@@ -14,7 +14,7 @@ const DeleteTask = ({ open, setOpen, taskToDelete }) => {
     try {
       setLoading(true);
       const results = await axios.delete(
-        `http://localhost:3000/tasks/${taskToDelete}`
+        `https://todo-app-cowlar-11bfdfa6ca3a.herokuapp.com/tasks/${taskToDelete}`
       );
       setLoading(false);
       console.log("Deleted task:", results);

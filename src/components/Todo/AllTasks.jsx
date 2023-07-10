@@ -35,6 +35,18 @@ const AllTasks = () => {
     fetchData();
   }, []);
 
+  const updateTask = async (id) => {
+    try {
+      console.log("id:", id);
+      const results = await axios.put(
+        `https://todo-app-cowlar-11bfdfa6ca3a.herokuapp.com/tasks/${id}`
+      );
+      console.log("Updated task:", results);
+    } catch (error) {
+      console.error("Error updating task", error);
+    }
+  };
+
   return (
     <>
       <div className="p-2 sm:w-[400px] w-[300px]">
@@ -76,17 +88,21 @@ const AllTasks = () => {
             tasks.map((task) => (
               <div
                 className="flex flex-row justify-between px-2 py-4 border-b-2 border-gray-100 cursor-pointer"
-                key={task._id}
+                key={task?._id}
                 onClick={() => {
-                  console.log(task._id);
+                  console.log(task?._id);
                 }}
               >
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
-                    id={task._id}
-                    name={task.title}
+                    id={task?._id}
+                    name={task?.title}
                     className="h-4 w-4 rounded-full"
+                    checked={task?.completed === true ? "checked" : ""}
+                    onChange={() => {
+                      updateTask(task?._id);
+                    }}
                   />
                   <label htmlFor="vehicle1">{task.title}</label>
                 </div>
