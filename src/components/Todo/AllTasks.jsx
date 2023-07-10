@@ -47,6 +47,23 @@ const AllTasks = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const results = await axios.get(
+          "https://todo-app-cowlar-11bfdfa6ca3a.herokuapp.com/tasks"
+        );
+        setTasks(results?.data?.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setErrors(error);
+      }
+    };
+    fetchData();
+    setLoading(false);
+  }, [taskToDelete, loading, errors, setTasks, updateTask]);
+
   return (
     <>
       <div className="p-2 sm:w-[400px] w-[300px]">
