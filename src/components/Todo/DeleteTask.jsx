@@ -1,9 +1,29 @@
 /* eslint-disable */
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
-const DeleteTask = ({ open, setOpen }) => {
+const DeleteTask = ({ open, setOpen, taskToDelete }) => {
   const toggleModal = () => {
     setOpen(!open);
+  };
+
+  const [loading, setLoading] = useState(false);
+
+  const deleteTask = async () => {
+    try {
+      setLoading(true);
+      const results = await axios.delete(
+        `http://localhost:3000/tasks/${taskToDelete}`
+      );
+      setLoading(false);
+      console.log("Deleted task:", results);
+      setOpen(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error deleting task", error);
+      setOpen(false);
+    }
   };
 
   return (
@@ -23,8 +43,15 @@ const DeleteTask = ({ open, setOpen }) => {
               >
                 Cancel
               </button>
-              <button className="bg-red-700 text-white p-2 rounded-md hover:bg-red-800">
-                Delete
+              <button
+                className="bg-red-700 text-white p-2 rounded-md hover:bg-red-800"
+                onClick={deleteTask}
+              >
+                {loading ? (
+                  <ClipLoader color="white" size={12} />
+                ) : (
+                  "Delete Task"
+                )}
               </button>
             </div>
           </div>

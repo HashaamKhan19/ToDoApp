@@ -14,13 +14,17 @@ const AllTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [errors, setErrors] = useState([]);
 
+  const [taskToDelete, setTaskToDelete] = useState("");
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const results = await axios.get("http://localhost:3000/tasks");
+        const results = await axios.get(
+          "https://todo-app-cowlar-11bfdfa6ca3a.herokuapp.com/tasks"
+        );
         setTasks(results?.data?.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -80,7 +84,7 @@ const AllTasks = () => {
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
-                    id={task.id}
+                    id={task._id}
                     name={task.title}
                     className="h-4 w-4 rounded-full"
                   />
@@ -90,6 +94,7 @@ const AllTasks = () => {
                   className="self-center transition-all ease-in duration-200 hover:bg-slate-100 p-2 rounded-md"
                   onClick={() => {
                     setOpen(!open);
+                    setTaskToDelete(task._id);
                   }}
                 >
                   <PiDotsSixVerticalBold />
@@ -100,7 +105,7 @@ const AllTasks = () => {
         </div>
       </div>
 
-      <DeleteTask open={open} setOpen={setOpen} />
+      <DeleteTask open={open} setOpen={setOpen} taskToDelete={taskToDelete} />
     </>
   );
 };
