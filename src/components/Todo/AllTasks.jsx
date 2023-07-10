@@ -6,6 +6,7 @@ import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { PiDotsSixVerticalBold } from "react-icons/pi";
 import { ClipLoader } from "react-spinners";
 import DeleteTask from "./DeleteTask";
+import AddTask from "./AddTask";
 
 const AllTasks = () => {
   const [showTasks, setShowTasks] = useState(true);
@@ -17,6 +18,8 @@ const AllTasks = () => {
   const [taskToDelete, setTaskToDelete] = useState("");
 
   const [open, setOpen] = useState(false);
+
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +66,18 @@ const AllTasks = () => {
     fetchData();
     setLoading(false);
   }, [taskToDelete, loading, errors, setTasks, updateTask]);
+
+  useEffect(() => {
+    const keyHandler = (e) => {
+      if (e.key === "Enter") {
+        setAddOpen(true);
+      }
+    };
+    window.addEventListener("keydown", keyHandler);
+    return () => {
+      window.removeEventListener("keydown", keyHandler);
+    };
+  }, []);
 
   return (
     <>
@@ -139,6 +154,7 @@ const AllTasks = () => {
       </div>
 
       <DeleteTask open={open} setOpen={setOpen} taskToDelete={taskToDelete} />
+      <AddTask addOpen={addOpen} setAddOpen={setAddOpen} />
     </>
   );
 };
