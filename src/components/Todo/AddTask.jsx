@@ -16,6 +16,10 @@ const AddTask = ({ addOpen, setAddOpen }) => {
       alert("Task must be at least 3 characters long");
       return;
     }
+    if (task.length > 24) {
+      alert("Task must be less than 24 characters long");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -51,7 +55,6 @@ const AddTask = ({ addOpen, setAddOpen }) => {
                 onChange={(e) => {
                   setTask(e.target.value);
                 }}
-                maxLength={24}
               />
             </div>
 
