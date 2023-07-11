@@ -51,6 +51,7 @@ const AddTask = ({ addOpen, setAddOpen }) => {
                 onChange={(e) => {
                   setTask(e.target.value);
                 }}
+                maxLength={24}
               />
             </div>
 
